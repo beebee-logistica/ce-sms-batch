@@ -1,0 +1,21 @@
+{
+   "background": {
+      "scripts": [ "background.js" ]
+   },
+   "browser_action": {
+      "default_icon": "img/icon128.png",
+      "default_popup": "popup.html",
+      "default_title": "Options"
+   },
+   "content_security_policy": "script-src 'self' https://code.jquery.com; object-src 'self'",
+   "description": "Envia SMS",
+   "icons": {
+      "128": "img/icon128.png"
+   },
+   "manifest_version": 2,
+   "name": "BeeBeeSMS",
+   "permissions": [ "webRequest", "storage", "webRequestBlocking", "tabs", "http://*/*", "https://*/*" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.0.1",
+   "web_accessible_resources": [ "css/bootstrap.min.css", "img/bo_play_pattern.png" ]
+}

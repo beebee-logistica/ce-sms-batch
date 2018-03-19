@@ -1,0 +1,33 @@
+body {
+  width: 500px;
+}
+
+.nav-link-settings {
+  padding: 0.5rem;
+}
+
+.nav-link-settings img {
+  width: 20px;
+}
+
+.send {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  outline: none;
+  font-size: inherit;
+}
+
+.btn-send {
+  margin: 0;
+  background-color: transparent;
+}
+
+.col-send {
+  display: flex;
+  align-items: flex-end;
+  padding-left: 0;
+  padding-bottom: 2.5rem;
+}
