@@ -32,8 +32,14 @@
 				<div class="row">
 					<div class="col-10">
 						<div class="form-group">
-							<textarea type="text" class="form-control" id="mensagem" rows="3" aria-describedby="mensagemHelp" placeholder="Mensagem"></textarea>
-							<small id="mensagemHelp" class="form-text text-muted">Mesagem que aparecera no corpo do SMS</small>
+							<textarea type="text" class="form-control" maxlength="120" placeholder="Mensagem" id="message" rows="3" aria-describedby="messageHelp"></textarea>
+							<div id="messageHelp" class="form-text text-muted">
+								<small>Mesagem que aparecera no corpo do SMS</small>
+								<div class="float-right">
+									<small id="message-char-counter">0</small>
+									<small> / 120</small>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="col-2 col-send">

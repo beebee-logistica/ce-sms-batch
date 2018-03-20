@@ -16,6 +16,10 @@
 				let settings = {};
 				console.log('storage get');
 			} );
+
+			$('#message').keyup((e) => {
+				$("#message-char-counter").html($('#message').val().length);
+			});
 		}
 	};
 

@@ -23,6 +23,7 @@ body {
 .btn-send {
   margin: 0;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .col-send {
