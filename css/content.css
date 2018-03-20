@@ -1,0 +1,8 @@
+.check-sms {
+  vertical-align: middle !important;
+  border-top: none !important;
+}
+
+.ui-chkbox-box.ui-widget.ui-state-default {
+  border: 1px solid gray;
+}
