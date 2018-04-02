@@ -6,23 +6,70 @@
 // a = ConfigureCheckBox
 // b = Init
 
-( function ( chrome ) {
+( function ( chrome, $ ) {
 
 	var _backPage = chrome.extension.getBackgroundPage();
 
-	const modulePopUp = {
-		Init: () => {
-			chrome.storage.sync.get( null, ( values ) => {
-				let settings = {};
-				console.log('storage get');
-			} );
+	const getToken = () => {
+		return localStorage[ 'smsToken' ];
+	};
 
-			$('#message').keyup((e) => {
-				$("#message-char-counter").html($('#message').val().length);
-			});
+	const getHost = () => {
+		if ( localStorage[ 'smsEnviroment' ] == 'dev' ) {
+			return 'api.dev.beebee.com.br';
+		} else if ( localStorage[ 'smsEnviroment' ] == 'beta' ) {
+			return 'api.beta.beebee.com.br';
+		} else if ( localStorage[ 'smsEnviroment' ] == 'prod' ) {
+			return 'api.beebee.com.br';
 		}
 	};
 
+
+	const Init = () => {
+		chrome.storage.sync.get( null, ( values ) => {
+			let settings = {};
+			console.log( 'storage get' );
+		} );
+
+		$( '#message' ).keyup( ( e ) => {
+			$( "#message-char-counter" ).html( $( '#message' ).val().length );
+		} );
+
+		$( '#btn-send' ).click( ( e ) => {
+			sendSMS();
+		} );
+	};
+
+	const sendSMS = () => {
+		let data = {
+			message: $( '#message' ).val(),
+			online: $( '#check-online' ).prop( 'checked' ),
+			offline: $( '#check-offline' ).prop( 'checked' )
+		}
+
+		if ( data.message.length <= 0 ) {
+			alert( 'Informe uma mensagem' );
+			return;
+		}
+
+		console.log( $.ajax );
+
+		$.ajax( 'https://' + getHost() + '/api/v1/vehicles/sendsms', {
+			headers: { Authorization: 'Bearer ' + getToken() },
+			method: 'POST',
+			data: JSON.stringify( data ),
+			contentType: 'application/json'
+		} )
+			.then( response => {
+				console.log( response );
+				alert( 'SMS enviado com sucesso!' );
+			} )
+			.catch( err => {
+				console.error( err );
+				alert( 'Erro ao enviar SMS.' );
+			} );
+	};
+
 	//Inicia módulo
-	modulePopUp.Init();
-}( chrome ) );
+	Init();
+}( chrome, $ ) );

@@ -9,8 +9,7 @@
    },
    "content_scripts": [
     {
-      "matches": ["https://dev.beebee.com.br/admin/veiculos"],
-      "css": ["css/content.css"],
+      "matches": ["https://dev.beebee.com.br/admin/dashboard"],
       "js": ["js/jquery.js", "content-script.js"]
     }
   ],
