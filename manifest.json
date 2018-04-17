@@ -22,6 +22,6 @@
    "name": "BeeBeeSMS",
    "permissions": [ "webRequest", "storage", "webRequestBlocking", "tabs", "http://*/*", "https://*/*" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.0.1",
+   "version": "0.1.0",
    "web_accessible_resources": [ "css/bootstrap.min.css", "img/bo_play_pattern.png" ]
 }
