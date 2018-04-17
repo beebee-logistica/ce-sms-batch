@@ -9,7 +9,7 @@
    },
    "content_scripts": [
     {
-      "matches": ["https://dev.beebee.com.br/admin/dashboard"],
+      "matches": ["https://dev.beebee.com.br/admin/dashboard", "https://beta.beebee.com.br/admin/dashboard", "https://beebee.com.br/admin/dashboard"],
       "js": ["js/jquery.js", "content-script.js"]
     }
   ],
