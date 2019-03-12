@@ -6,7 +6,7 @@ if (location.host.startsWith('dev')) {
     enviroment = 'dev';
 } else if (location.host.startsWith('beta')) {
     enviroment = 'beta';
-} else if (location.host.startsWith('beebee')) {
+} else if (location.host.startsWith('beebee') || location.host.startsWith('app.beebee')) {
     enviroment = 'prod';
 }
 
@@ -25,5 +25,16 @@ if (akitaState && akitaState.auth && akitaState.auth.token) {
     chrome.runtime.sendMessage({ type: 'token', token: akitaState.auth.token }, (response) => {
         console.log(response);
     });
+} else {
+    // backwards compatibility
+    let tokenStorageName = 'bee-jwt-token' + enviroment;
+    let token = JSON.parse(localStorage[tokenStorageName]);
+
+    console.log({ token });
+    if (token) {
+        chrome.runtime.sendMessage({ type: 'token', token: token }, (response) => {
+            console.log(response);
+        });
+    }
 }
 console.log('===== End of beebee sms extension content-stript')
