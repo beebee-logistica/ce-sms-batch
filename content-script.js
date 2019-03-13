@@ -17,19 +17,20 @@ if (enviroment) {
     });
 }
 
-let akitaStateName = 'akita-state-' + enviroment;
-let akitaState = JSON.parse(localStorage[akitaStateName]);
+let akitaStateString = localStorage.getItem('akita-state-' + enviroment);
+console.log(akitaStateString);
 
-console.log(akitaState.auth.token);
-if (akitaState && akitaState.auth && akitaState.auth.token) {
-    chrome.runtime.sendMessage({ type: 'token', token: akitaState.auth.token }, (response) => {
-        console.log(response);
-    });
+if (akitaStateString) {
+    let akitaState = JSON.parse(akitaStateString);
+    console.log(akitaState.auth.token);
+    if (akitaState && akitaState.auth && akitaState.auth.token) {
+        chrome.runtime.sendMessage({ type: 'token', token: akitaState.auth.token }, (response) => {
+            console.log(response);
+        });
+    }
 } else {
     // backwards compatibility
-    let tokenStorageName = 'bee-jwt-token' + enviroment;
-    let token = JSON.parse(localStorage[tokenStorageName]);
-
+    let token = localStorage.getItem('bee-jwt-token-' + enviroment);
     console.log({ token });
     if (token) {
         chrome.runtime.sendMessage({ type: 'token', token: token }, (response) => {

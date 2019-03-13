@@ -15,9 +15,11 @@
             "https://dev.beebee.com.br/admin/pedidos/operacoes",
             "https://beta.beebee.com.br/admin/pedidos/operacoes",
             "https://beebee.com.br/admin/pedidos/operacoes",
+            "https://app.beebee.com.br/admin/pedidos/operacoes",
             "https://dev.beebee.com.br/admin/dashboard",
             "https://beta.beebee.com.br/admin/dashboard",
-            "https://beebee.com.br/admin/dashboard"
+            "https://beebee.com.br/admin/dashboard",
+            "https://app.beebee.com.br/admin/dashboard"
          ],
          "js": [
             "js/jquery.js",
@@ -41,7 +43,7 @@
       "https://*/*"
    ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.1.1",
+   "version": "0.1.2",
    "web_accessible_resources": [
       "css/bootstrap.min.css",
       "img/bo_play_pattern.png"
