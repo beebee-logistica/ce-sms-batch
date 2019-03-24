@@ -8,28 +8,30 @@
 
 ( function ( chrome, $ ) {
 
-	var _backPage = chrome.extension.getBackgroundPage();
+	// var _backPage = chrome.extension.getBackgroundPage();
+	var _token = null;
 
 	const getToken = () => {
-		return localStorage[ 'smsToken' ];
+		return localStorage.getItem( 'sms-token' );
 	};
 
 	const getHost = () => {
-		if ( localStorage[ 'smsEnviroment' ] == 'dev' ) {
+		if ( localStorage.getItem( 'sms-enviroment' ) == 'dev' ) {
 			return 'api.dev.beebee.com.br';
-		} else if ( localStorage[ 'smsEnviroment' ] == 'beta' ) {
+		} else if ( localStorage.getItem( 'sms-enviroment' ) == 'beta' ) {
 			return 'api.beta.beebee.com.br';
-		} else if ( localStorage[ 'smsEnviroment' ] == 'prod' ) {
+		} else if ( localStorage.getItem( 'sms-enviroment' ) == 'prod' ) {
 			return 'api.beebee.com.br';
 		}
 	};
 
-
 	const Init = () => {
 		chrome.storage.sync.get( null, ( values ) => {
-			let settings = {};
 			console.log( 'storage get' );
 		} );
+
+		_token = getToken();
+		console.log( _token );
 
 		$( '#message' ).keyup( ( e ) => {
 			$( "#message-char-counter" ).html( $( '#message' ).val().length );
@@ -38,13 +40,32 @@
 		$( '#btn-send' ).click( ( e ) => {
 			sendSMS();
 		} );
+
+		// load categories
+		if ( _token ) {
+			getCategories()
+				.then( categories => {
+					if ( categories && categories.length > 0 ) {
+						let strOptions = '<option selected="selected" value="0">Todas</option>';
+						categories.forEach( item => {
+							strOptions += "<option value='" + item.id + "'>" + item.name + "</option>";
+						} );
+						let $selectCategory = $( '#selectCategory' );
+						$selectCategory.empty();
+						$selectCategory.append( strOptions );
+					}
+				} );
+		}
 	};
 
 	const sendSMS = () => {
+		let categoryValue = $( '#selectCategory' ).val();
+
 		let data = {
 			message: $( '#message' ).val(),
 			online: $( '#check-online' ).prop( 'checked' ),
-			offline: $( '#check-offline' ).prop( 'checked' )
+			offline: $( '#check-offline' ).prop( 'checked' ),
+			categoryId: categoryValue == 0 ? null : categoryValue
 		}
 
 		if ( data.message.length <= 0 ) {
@@ -52,10 +73,8 @@
 			return;
 		}
 
-		console.log( $.ajax );
-
 		$.ajax( 'https://' + getHost() + '/api/v1/vehicles/sendsms', {
-			headers: { Authorization: 'Bearer ' + getToken() },
+			headers: { Authorization: 'Bearer ' + _token },
 			method: 'POST',
 			data: JSON.stringify( data ),
 			contentType: 'application/json'
@@ -69,6 +88,18 @@
 				alert( 'Erro ao enviar SMS.' );
 			} );
 	};
+
+	const getCategories = () => {
+		return $.get( {
+			url: 'https://' + getHost() + '/api/v1/categories',
+			headers: { Authorization: 'Bearer ' + _token },
+			contentType: 'application/json'
+		} )
+			.then( mapCategories );
+	}
+
+	const mapCategories = ( list ) => list.map( item => ( { id: item.id, name: item.name } ) );
+
 
 	//Inicia módulo
 	Init();

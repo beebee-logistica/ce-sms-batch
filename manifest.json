@@ -43,7 +43,7 @@
       "https://*/*"
    ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.1.2",
+   "version": "0.2.0",
    "web_accessible_resources": [
       "css/bootstrap.min.css",
       "img/bo_play_pattern.png"

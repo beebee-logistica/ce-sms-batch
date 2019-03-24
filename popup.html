@@ -12,9 +12,10 @@
 	<div class="container">
 		<nav>
 			<div class="nav nav-tabs mb-3 justify-content-between" id="vab-tab" role="tablist">
-				<a class="nav-item nav-link active" id="sms-tab" data-toggle="tab" href="#sms" role="tab" aria-controls="sms" aria-selected="true">SMS</a>
-				<a class="nav-item nav-link nav-link-settings" id="nav-settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
-				 aria-selected="false">
+				<a class="nav-item nav-link active" id="sms-tab" data-toggle="tab" href="#sms" role="tab"
+					aria-controls="sms" aria-selected="true">SMS</a>
+				<a class="nav-item nav-link nav-link-settings" id="nav-settings-tab" data-toggle="tab" href="#settings"
+					role="tab" aria-controls="settings" aria-selected="false">
 					<span class="oi oi-cog" title="cog" aria-hidden="true"></span>
 				</a>
 			</div>
@@ -23,7 +24,13 @@
 			<div class="tab-pane fade show active" id="sms" role="tabpanel" aria-labelledby="sms-tab">
 				<h6>Enviar para ve&iacute;culos:</h6>
 				<div class="row">
-					<dir class="col-10">
+					<div class="col-10">
+						<div class="form-group">
+							<label for="selectCategory">Categoria</label>
+							<select class="form-control" id="selectCategory">
+								<option selected="selected" value="0">Todas</option>
+							</select>
+						</div>
 						<div class="form-check">
 							<input type="checkbox" class="form-check-input" id="check-online">
 							<label class="form-check-label" for="check-online">Online</label>
@@ -32,7 +39,7 @@
 							<input type="checkbox" class="form-check-input" id="check-offline">
 							<label class="form-check-label" for="check-offline">Offline</label>
 						</div>
-					</dir>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col-10">
@@ -45,7 +52,8 @@
 				<div class="row">
 					<div class="col-10">
 						<div class="form-group">
-							<textarea type="text" class="form-control" maxlength="120" placeholder="Mensagem" id="message" rows="3" aria-describedby="messageHelp"></textarea>
+							<textarea type="text" class="form-control" maxlength="120" placeholder="Mensagem"
+								id="message" rows="3" aria-describedby="messageHelp"></textarea>
 							<div id="messageHelp" class="form-text text-muted">
 								<small>Mesagem que aparecera no corpo do SMS</small>
 								<div class="float-right">
@@ -59,7 +67,9 @@
 						<button id="btn-send" class="btn-send send">
 							<span class="send">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-									<path fill="#263238" fill-opacity=".45" d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"></path>
+									<path fill="#263238" fill-opacity=".45"
+										d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z">
+									</path>
 								</svg>
 							</span>
 						</button>
