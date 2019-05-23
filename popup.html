@@ -3,6 +3,7 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" href="css/bootstrap.min.css" rel="stylesheet">
 	<link type="text/css" href="css/open-iconic-bootstrap.min.css" rel="stylesheet">
 	<link type="text/css" href="css/app.css" rel="stylesheet">
@@ -13,16 +14,18 @@
 		<nav>
 			<div class="nav nav-tabs mb-3 justify-content-between" id="vab-tab" role="tablist">
 				<a class="nav-item nav-link active" id="sms-tab" data-toggle="tab" href="#sms" role="tab"
-					aria-controls="sms" aria-selected="true">SMS</a>
+					data-sms-target="vehicles" aria-controls="sms" aria-selected="true">SMS Veículo</a>
+				<a class="nav-item nav-link" id="sms-users-tab" data-toggle="tab" href="#smsUsers" role="tab"
+					data-sms-target="users" aria-controls="sms-users" aria-selected="true">SMS Usuário</a>
 				<a class="nav-item nav-link nav-link-settings" id="nav-settings-tab" data-toggle="tab" href="#settings"
-					role="tab" aria-controls="settings" aria-selected="false">
+					data-sms-target="none" role="tab" aria-controls="settings" aria-selected="false">
 					<span class="oi oi-cog" title="cog" aria-hidden="true"></span>
 				</a>
 			</div>
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="sms" role="tabpanel" aria-labelledby="sms-tab">
-				<h6>Enviar para ve&iacute;culos:</h6>
+				<h6>Enviar para usuários associados à veículos:</h6>
 				<div class="row">
 					<div class="col-10">
 						<div class="form-group">
@@ -41,38 +44,16 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="tab-pane fade" id="smsUsers" role="tabpanel" aria-labelledby="sms-users-tab">
+				<h6>Enviar para umas liata de usuários</h6>
 				<div class="row">
 					<div class="col-10">
 						<div class="form-group">
-							<label for="title">Title</label>
-							<input type="text" class="form-control" id="title" placeholder="Titulo (opcional)">
+							<label for="phones">Telefones (separados por ,)</label>
+							<textarea rows="3" class="form-control" id="phones" placeholder="Telefones"
+								aria-describedby="phones"></textarea>
 						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-10">
-						<div class="form-group">
-							<textarea type="text" class="form-control" maxlength="120" placeholder="Mensagem"
-								id="message" rows="3" aria-describedby="messageHelp"></textarea>
-							<div id="messageHelp" class="form-text text-muted">
-								<small>Mesagem que aparecera no corpo do SMS</small>
-								<div class="float-right">
-									<small id="message-char-counter">0</small>
-									<small> / 120</small>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-2 col-send">
-						<button id="btn-send" class="btn-send send">
-							<span class="send">
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-									<path fill="#263238" fill-opacity=".45"
-										d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z">
-									</path>
-								</svg>
-							</span>
-						</button>
 					</div>
 				</div>
 			</div>
@@ -83,6 +64,41 @@
 						<label class="form-check-label" for="send-push">Enviar Push</label>
 					</div>
 				</div>
+			</div>
+		</div>
+		<hr />
+		<div class="row">
+			<div class="col-10">
+				<div class="form-group">
+					<label for="title">Title</label>
+					<input type="text" class="form-control" id="title" placeholder="Titulo (opcional)">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-10">
+				<div class="form-group">
+					<textarea type="text" class="form-control" maxlength="120" placeholder="Mensagem" id="message"
+						rows="3" aria-describedby="messageHelp"></textarea>
+					<div id="messageHelp" class="form-text text-muted">
+						<small>Mesagem que aparecera no corpo do SMS</small>
+						<div class="float-right">
+							<small id="message-char-counter">0</small>
+							<small> / 120</small>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-2 col-send">
+				<button id="btn-send" class="btn-send send">
+					<span class="send">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+							<path fill="#263238" fill-opacity=".45"
+								d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z">
+							</path>
+						</svg>
+					</span>
+				</button>
 			</div>
 		</div>
 	</div>

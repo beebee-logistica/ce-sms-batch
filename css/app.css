@@ -6,6 +6,10 @@ body {
   padding: 0.5rem;
 }
 
+#sms-users-tab {
+  margin-right: 190px;
+}
+
 .nav-link-settings img {
   width: 20px;
 }

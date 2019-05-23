@@ -10,6 +10,7 @@
 
 	// var _backPage = chrome.extension.getBackgroundPage();
 	var _token = null;
+	var _target = null;
 
 	const getToken = () => {
 		return localStorage.getItem( 'sms-token' );
@@ -17,11 +18,13 @@
 
 	const getHost = () => {
 		if ( localStorage.getItem( 'sms-enviroment' ) == 'dev' ) {
-			return 'api.dev.beebee.com.br';
+			return 'https://api.dev.beebee.com.br';
 		} else if ( localStorage.getItem( 'sms-enviroment' ) == 'beta' ) {
-			return 'api.beta.beebee.com.br';
+			return 'https://api.beta.beebee.com.br';
 		} else if ( localStorage.getItem( 'sms-enviroment' ) == 'prod' ) {
-			return 'api.beebee.com.br';
+			return 'https://api.beebee.com.br';
+		} else {
+			return 'http://localhost:8000';
 		}
 	};
 
@@ -33,12 +36,18 @@
 		_token = getToken();
 		console.log( _token );
 
+		$( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function ( e ) {
+			// e.target // newly activated tab
+			// e.relatedTarget // previous active tab
+			_target = $( e.target ).data( "sms-target" );
+		} )
+
 		$( '#message' ).keyup( ( e ) => {
 			$( "#message-char-counter" ).html( $( '#message' ).val().length );
 		} );
 
 		$( '#btn-send' ).click( ( e ) => {
-			sendSMS();
+			sendSMS( _target );
 		} );
 
 		// load categories
@@ -58,23 +67,42 @@
 		}
 	};
 
-	const sendSMS = () => {
-		let categoryValue = $( '#selectCategory' ).val();
+	const sendSMS = ( target ) => {
+		const message = $( '#message' ).val();
 
-		let data = {
-			message: $( '#message' ).val(),
-			online: $( '#check-online' ).prop( 'checked' ),
-			offline: $( '#check-offline' ).prop( 'checked' ),
-			categoryId: categoryValue == 0 ? null : categoryValue
-		}
-
-		if ( data.message.length <= 0 ) {
+		if ( message.length <= 0 ) {
 			alert( 'Informe uma mensagem' );
 			return;
 		}
 
-		$.ajax( 'https://' + getHost() + '/api/v1/vehicles/sendsms', {
-			headers: { Authorization: 'Bearer ' + _token },
+		if ( target == 'vehicles' ) {
+			sendSMSVehicles( message );
+		} else if ( target == 'users' ) {
+			sendSMSUsers( message );
+		};
+	}
+
+	const getCategories = () => {
+		return $.get( {
+			url: getHost() + '/api/v1/categories',
+			headers: getRequestHeaders(),
+			contentType: 'application/json'
+		} )
+			.then( mapCategories );
+	}
+
+	const sendSMSVehicles = ( message ) => {
+		let categoryValue = $( '#selectCategory' ).val();
+
+		let data = {
+			categoryId: categoryValue == 0 ? null : categoryValue,
+			online: $( '#check-online' ).prop( 'checked' ),
+			offline: $( '#check-offline' ).prop( 'checked' ),
+			message: $( '#message' ).val()
+		}
+
+		$.ajax( 'https://' + getHost() + '/api/v1/users/send-sms-vehicle-associated', {
+			headers: getRequestHeaders(),
 			method: 'POST',
 			data: JSON.stringify( data ),
 			contentType: 'application/json'
@@ -87,19 +115,39 @@
 				console.error( err );
 				alert( 'Erro ao enviar SMS.' );
 			} );
-	};
+	}
 
-	const getCategories = () => {
-		return $.get( {
-			url: 'https://' + getHost() + '/api/v1/categories',
-			headers: { Authorization: 'Bearer ' + _token },
+	const sendSMSUsers = () => {
+		let phones = $( '#phones' ).val();
+		const phonesRegex = new RegExp( '[0-9,]', 'g' );
+		phones = phones.match( phonesRegex ).join( '' );
+
+		let data = {
+			phones: phones.split( ',' ),
+			message: $( '#message' ).val()
+		}
+
+		$.ajax( getHost() + '/api/v1/users/send-sms-users', {
+			headers: getRequestHeaders(),
+			method: 'POST',
+			data: JSON.stringify( data ),
 			contentType: 'application/json'
 		} )
-			.then( mapCategories );
+			.then( response => {
+				console.log( response );
+				alert( 'Operação realizada com sucesso! \n\n ' + response );
+			} )
+			.catch( err => {
+				console.error( err );
+				alert( 'Erro ao enviar SMS.' );
+			} );
 	}
 
 	const mapCategories = ( list ) => list.map( item => ( { id: item.id, name: item.name } ) );
 
+	const getRequestHeaders = () => {
+		return { Authorization: 'Bearer ' + _token };
+	}
 
 	//Inicia módulo
 	Init();
