@@ -18,6 +18,9 @@ if (enviroment) {
 }
 
 let akitaStateString = sessionStorage.getItem('akita-state-' + enviroment);
+if (!akitaStateString) {
+    akitaStateString = localStorage.getItem('akita-state-' + enviroment)
+}
 console.log(akitaStateString);
 
 if (akitaStateString) {
