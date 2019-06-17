@@ -19,8 +19,8 @@
 	const getHost = () => {
 		if ( localStorage.getItem( 'sms-enviroment' ) == 'dev' ) {
 			return 'https://api.dev.beebee.com.br';
-		} else if ( localStorage.getItem( 'sms-enviroment' ) == 'beta' ) {
-			return 'https://api.beta.beebee.com.br';
+		} else if ( localStorage.getItem( 'sms-enviroment' ) == 'hom' ) {
+			return 'https://api.hom.beebee.com.br';
 		} else if ( localStorage.getItem( 'sms-enviroment' ) == 'prod' ) {
 			return 'https://api.beebee.com.br';
 		} else {

@@ -14,10 +14,12 @@
          "matches": [
             "https://dev.beebee.com.br/admin/pedidos/operacoes",
             "https://beta.beebee.com.br/admin/pedidos/operacoes",
+            "https://hom.beebee.com.br/admin/pedidos/operacoes",
             "https://beebee.com.br/admin/pedidos/operacoes",
             "https://app.beebee.com.br/admin/pedidos/operacoes",
             "https://dev.beebee.com.br/admin/dashboard",
             "https://beta.beebee.com.br/admin/dashboard",
+            "https://hom.beebee.com.br/admin/dashboard",
             "https://beebee.com.br/admin/dashboard",
             "https://app.beebee.com.br/admin/dashboard"
          ],

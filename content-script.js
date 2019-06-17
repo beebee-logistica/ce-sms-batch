@@ -4,8 +4,8 @@ let enviroment = undefined;
 
 if (location.host.startsWith('dev')) {
     enviroment = 'dev';
-} else if (location.host.startsWith('beta')) {
-    enviroment = 'beta';
+} else if (location.host.startsWith('hom')) {
+    enviroment = 'hom';
 } else if (location.host.startsWith('beebee') || location.host.startsWith('app.beebee')) {
     enviroment = 'prod';
 }
@@ -17,7 +17,7 @@ if (enviroment) {
     });
 }
 
-let akitaStateString = localStorage.getItem('akita-state-' + enviroment);
+let akitaStateString = sessionStorage.getItem('akita-state-' + enviroment);
 console.log(akitaStateString);
 
 if (akitaStateString) {
