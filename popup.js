@@ -28,6 +28,14 @@
 		}
 	};
 
+	const getSMSVehicleEndpoint = () => {
+		if ( localStorage.getItem( 'sms-enviroment' ) == 'prod' ) {
+			return 'https://' + getHost() + '/api/v1/vehicles/sendsms';
+		} else {
+			return 'https://' + getHost() + '/api/v1/users/send-sms-vehicle-associated';
+		}
+	};
+
 	const Init = () => {
 		chrome.storage.sync.get( null, ( values ) => {
 			console.log( 'storage get' );
@@ -101,7 +109,7 @@
 			message: $( '#message' ).val()
 		}
 
-		$.ajax( 'https://' + getHost() + '/api/v1/users/send-sms-vehicle-associated', {
+		$.ajax( getSMSVehicleEndpoint(), {
 			headers: getRequestHeaders(),
 			method: 'POST',
 			data: JSON.stringify( data ),
